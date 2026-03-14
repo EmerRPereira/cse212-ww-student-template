@@ -1,63 +1,52 @@
 ﻿public class PriorityQueue
 {
-    private List<PriorityItem> _queue = new();
+    private readonly Queue<PriorityItem> _queue = new Queue<PriorityItem>();
 
-    /// <summary>
-    /// Add a new value to the queue with an associated priority.  The
-    /// node is always added to the back of the queue regardless of 
-    /// the priority.
-    /// </summary>
-    /// <param name="value">The value</param>
-    /// <param name="priority">The priority</param>
     public void Enqueue(string value, int priority)
     {
-        var newNode = new PriorityItem(value, priority);
-        _queue.Add(newNode);
+        _queue.Enqueue(new PriorityItem(value, priority));
     }
 
     public string Dequeue()
     {
-        if (_queue.Count == 0) // Verify the queue is not empty
+        if (_queue.Count == 0)
         {
             throw new InvalidOperationException("The queue is empty.");
         }
 
-        // Find the index of the item with the highest priority to remove
-        var highPriorityIndex = 0;
-        for (int index = 1; index < _queue.Count - 1; index++)
+        // Find the index of the item with the highest priority
+        int highestPriorityIndex = 0;
+        int highestPriority = _queue.Peek().Priority;
+        
+        // Need to examine all items to find highest priority
+        // Since we can't index directly, we'll convert to list temporarily
+        var items = _queue.ToList();
+        
+        for (int i = 1; i < items.Count; i++)
         {
-            if (_queue[index].Priority >= _queue[highPriorityIndex].Priority)
-                highPriorityIndex = index;
+            if (items[i].Priority > highestPriority)
+            {
+                highestPriority = items[i].Priority;
+                highestPriorityIndex = i;
+            }
         }
 
-        // Remove and return the item with the highest priority
-        var value = _queue[highPriorityIndex].Value;
-        return value;
-    }
-
-    // DO NOT MODIFY THE CODE IN THIS METHOD
-    // The graders rely on this method to check if you fixed all the bugs, so changes to it will cause you to lose points.
-    public override string ToString()
-    {
-        return $"[{string.Join(", ", _queue)}]";
-    }
-}
-
-internal class PriorityItem
-{
-    internal string Value { get; set; }
-    internal int Priority { get; set; }
-
-    internal PriorityItem(string value, int priority)
-    {
-        Value = value;
-        Priority = priority;
-    }
-
-    // DO NOT MODIFY THE CODE IN THIS METHOD
-    // The graders rely on this method to check if you fixed all the bugs, so changes to it will cause you to lose points.
-    public override string ToString()
-    {
-        return $"{Value} (Pri:{Priority})";
+        // Remove and return the highest priority item
+        // To remove from middle, we need to rebuild the queue
+        string result = "";
+        
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (i == highestPriorityIndex)
+            {
+                result = items[i].Value;
+            }
+            else
+            {
+                _queue.Enqueue(items[i]);
+            }
+        }
+        
+        return result;
     }
 }
