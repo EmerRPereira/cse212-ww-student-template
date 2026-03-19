@@ -12,42 +12,42 @@ public static class Arrays
     public static double[] MultiplesOf(double number, int length)
     {
         // TODO Problem 1 Start
-        // PLANO DE IMPLEMENTAÇÃO:
-        // 1. Precisamos criar um array de doubles com tamanho igual a 'length'
-        // 2. O primeiro elemento deve ser o próprio 'number'
-        // 3. Cada elemento subsequente deve ser o anterior + 'number' (ou number * (i+1))
-        // 4. Usaremos um loop for para preencher cada posição do array
-        // 5. Retornaremos o array preenchido
+        // IMPLEMENTATION PLAN:
+        // 1. Create a double array with size equal to 'length'
+        // 2. The first element must be the 'number' itself
+        // 3. Each subsequent element should be the previous + 'number' (or number * (i+1))
+        // 4. Use a for loop to fill each position of the array
+        // 5. Return the filled array
         
-        // Exemplo: number = 3, length = 5
-        // Posição 0: 3 * 1 = 3
-        // Posição 1: 3 * 2 = 6
-        // Posição 2: 3 * 3 = 9
-        // Posição 3: 3 * 4 = 12
-        // Posição 4: 3 * 5 = 15
-        // Resultado: {3, 6, 9, 12, 15}
+        // Example: number = 3, length = 5
+        // Position 0: 3 * 1 = 3
+        // Position 1: 3 * 2 = 6
+        // Position 2: 3 * 3 = 9
+        // Position 3: 3 * 4 = 12
+        // Position 4: 3 * 5 = 15
+        // Result: {3, 6, 9, 12, 15}
         
-        // Implementação:
+        // Implementation:
         
-        // 1. Criar um array para armazenar os resultados
-        double[] resultado = new double[length];
+        // 1. Create an array to store the results
+        double[] result = new double[length];
         
-        // 2. Loop para preencher cada posição
+        // 2. Loop to fill each position
         for (int i = 0; i < length; i++)
         {
-            // O múltiplo na posição i é number * (i + 1)
-            // i+1 porque começamos em 1, não em 0
-            resultado[i] = number * (i + 1);
+            // The multiple at position i is number * (i + 1)
+            // i+1 because we start at 1, not 0
+            result[i] = number * (i + 1);
             
-            // Poderíamos também fazer:
+            // We could also do:
             // if (i == 0)
-            //     resultado[i] = number;
+            //     result[i] = number;
             // else
-            //     resultado[i] = resultado[i-1] + number;
+            //     result[i] = result[i-1] + number;
         }
         
-        // 3. Retornar o array preenchido
-        return resultado;
+        // 3. Return the filled array
+        return result;
     }
 
     /// <summary>
@@ -60,68 +60,68 @@ public static class Arrays
     public static void RotateListRight(List<int> data, int amount)
     {
         // TODO Problem 2 Start
-        // PLANO DE IMPLEMENTAÇÃO:
+        // IMPLEMENTATION PLAN:
         // 
-        // Exemplo: data = [1, 2, 3, 4, 5, 6, 7, 8, 9], amount = 3
-        // Resultado esperado: [7, 8, 9, 1, 2, 3, 4, 5, 6]
+        // Example: data = [1, 2, 3, 4, 5, 6, 7, 8, 9], amount = 3
+        // Expected result: [7, 8, 9, 1, 2, 3, 4, 5, 6]
         //
-        // 1. Verificar se a lista não é nula ou vazia
-        // 2. Como amount pode ser maior que o tamanho da lista, usar módulo: amount = amount % data.Count
-        //    (mas o enunciado diz que amount está entre 1 e data.Count, então não precisamos)
-        // 3. Calcular o ponto de divisão: splitIndex = data.Count - amount
-        //    Para amount=3: splitIndex = 9 - 3 = 6
+        // 1. Check if the list is not null or empty
+        // 2. Since amount could be larger than the list size, use modulo: amount = amount % data.Count
+        //    (but the statement says amount is between 1 and data.Count, so we don't need it)
+        // 3. Calculate the split point: splitIndex = data.Count - amount
+        //    For amount=3: splitIndex = 9 - 3 = 6
         //
-        // 4. A lista pode ser visualmente dividida em duas partes:
-        //    - Primeira parte: índices 0 até splitIndex-1 = [1, 2, 3, 4, 5, 6]
-        //    - Segunda parte: índices splitIndex até o fim = [7, 8, 9]
+        // 4. The list can be visually divided into two parts:
+        //    - First part: indices 0 to splitIndex-1 = [1, 2, 3, 4, 5, 6]
+        //    - Second part: indices splitIndex to the end = [7, 8, 9]
         //
-        // 5. Para rotacionar à direita, a segunda parte deve vir primeiro:
-        //    - Extrair a segunda parte (GetRange)
-        //    - Remover a segunda parte da lista original (RemoveRange)
-        //    - Inserir a segunda parte no início da lista (InsertRange)
-        //    OU
-        //    - Criar uma nova lista combinando segunda parte + primeira parte
-        //    - Limpar a lista original e adicionar todos os elementos da nova lista
+        // 5. To rotate to the right, the second part should come first:
+        //    - Extract the second part (GetRange)
+        //    - Remove the second part from the original list (RemoveRange)
+        //    - Insert the second part at the beginning of the list (InsertRange)
+        //    OR
+        //    - Create a new list combining second part + first part
+        //    - Clear the original list and add all elements from the new list
         
-        // Implementação usando a abordagem de criar nova lista (mais clara):
+        // Implementation using the approach of creating a new list (clearer):
 
-        // Verificação de segurança
+        // Safety check
         if (data == null || data.Count == 0 || amount <= 0)
         {
-            return; // Não há o que rotacionar
+            return; // Nothing to rotate
         }
         
-        // Ajustar amount se necessário (embora o enunciado garanta que está no range)
+        // Adjust amount if necessary (although the statement guarantees it's in range)
         amount = amount % data.Count;
-        if (amount == 0) return; // Se amount é múltiplo do tamanho, não há mudança
+        if (amount == 0) return; // If amount is a multiple of the size, no change
         
-        // Calcular o índice onde faremos a divisão
+        // Calculate the index where we will split
         int splitIndex = data.Count - amount;
         
-        // Obter as duas partes da lista
-        // Parte 1: do início até splitIndex-1
-        List<int> primeiraParte = data.GetRange(0, splitIndex);
+        // Get the two parts of the list
+        // Part 1: from beginning to splitIndex-1
+        List<int> firstPart = data.GetRange(0, splitIndex);
         
-        // Parte 2: de splitIndex até o fim
-        List<int> segundaParte = data.GetRange(splitIndex, amount);
+        // Part 2: from splitIndex to the end
+        List<int> secondPart = data.GetRange(splitIndex, amount);
         
-        // Limpar a lista original
+        // Clear the original list
         data.Clear();
         
-        // Reconstruir na ordem correta: segundaParte + primeiraParte
-        data.AddRange(segundaParte);
-        data.AddRange(primeiraParte);
+        // Rebuild in the correct order: secondPart + firstPart
+        data.AddRange(secondPart);
+        data.AddRange(firstPart);
         
         /* 
-         * Visualização do processo:
+         * Process visualization:
          * 
          * Original: [1, 2, 3, 4, 5, 6, 7, 8, 9], amount = 3
          * splitIndex = 9 - 3 = 6
          * 
-         * primeiraParte = GetRange(0, 6) = [1, 2, 3, 4, 5, 6]
-         * segundaParte = GetRange(6, 3) = [7, 8, 9]
+         * firstPart = GetRange(0, 6) = [1, 2, 3, 4, 5, 6]
+         * secondPart = GetRange(6, 3) = [7, 8, 9]
          * 
-         * Após Clear() e AddRange:
+         * After Clear() and AddRange:
          * data = [7, 8, 9, 1, 2, 3, 4, 5, 6]
          */
     }
