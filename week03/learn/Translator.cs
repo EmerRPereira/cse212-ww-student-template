@@ -1,4 +1,4 @@
-public class Translator
+/*public class Translator
 {
     public static void Run()
     {
@@ -36,5 +36,75 @@ public class Translator
     {
         // ADD YOUR CODE HERE
         return "";
+    }
+}
+
+*/
+
+using System;
+using System.Collections.Generic;
+
+public class Translator
+{
+    private Dictionary<string, string> _translations = new Dictionary<string, string>();
+    
+    /// <summary>
+    /// Adiciona uma tradução de palavra
+    /// </summary>
+    /// <param name="word">Palavra no idioma original (inglês)</param>
+    /// <param name="translation">Tradução para o idioma alvo (alemão)</param>
+    public void AddWord(string word, string translation)
+    {
+        // Verifica se a palavra já existe no dicionário
+        if (_translations.ContainsKey(word))
+        {
+            Console.WriteLine($"Aviso: A palavra '{word}' já possui uma tradução. Substituindo de '{_translations[word]}' para '{translation}'.");
+            _translations[word] = translation;
+        }
+        else
+        {
+            // Adiciona a nova tradução
+            _translations.Add(word, translation);
+            Console.WriteLine($"Tradução adicionada: '{word}' -> '{translation}'");
+        }
+    }
+    
+    /// <summary>
+    /// Traduz uma palavra do idioma original para o idioma alvo
+    /// </summary>
+    /// <param name="word">Palavra a ser traduzida</param>
+    /// <returns>Tradução da palavra ou "???" se não encontrada</returns>
+    public string Translate(string word)
+    {
+        // Tenta encontrar a tradução no dicionário
+        if (_translations.TryGetValue(word, out string? translation))
+        {
+            return translation;
+        }
+        
+        // Se não encontrar, retorna "???"
+        return "???";
+    }
+    
+    /// <summary>
+    /// Retorna o número de traduções no dicionário
+    /// </summary>
+    public int Count => _translations.Count;
+    
+    /// <summary>
+    /// Limpa todas as traduções
+    /// </summary>
+    public void Clear()
+    {
+        _translations.Clear();
+        Console.WriteLine("Todas as traduções foram removidas.");
+    }
+    
+    /// <summary>
+    /// Verifica se uma palavra existe no dicionário
+    /// </summary>
+    public bool HasWord(string word)
+    {
+        return _translations.ContainsKey(word);
     }
 }
