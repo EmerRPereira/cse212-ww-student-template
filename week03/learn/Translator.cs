@@ -152,4 +152,28 @@ public class Translator
         _translations.Clear();
         Console.WriteLine("Todas as traduções foram removidas.");
     }
+    public static void Run()
+    {
+        Console.WriteLine("\n=== Tradutor Inglês-Alemão ===");
+        
+        var tradutor = new Translator();
+        
+        // Adicionar traduções
+        tradutor.AddWord("hello", "hallo");
+        tradutor.AddWord("goodbye", "auf Wiedersehen");
+        tradutor.AddWord("thank you", "danke");
+        tradutor.AddWord("yes", "ja");
+        tradutor.AddWord("no", "nein");
+        
+        Console.WriteLine($"\nTotal de traduções: {tradutor.Count}\n");
+        
+        // Testar traduções
+        Console.WriteLine("Testando traduções:");
+        Console.WriteLine($"hello -> {tradutor.Translate("hello")}");
+        Console.WriteLine($"goodbye -> {tradutor.Translate("goodbye")}");
+        Console.WriteLine($"thank you -> {tradutor.Translate("thank you")}");
+        Console.WriteLine($"yes -> {tradutor.Translate("yes")}");
+        Console.WriteLine($"no -> {tradutor.Translate("no")}");
+        Console.WriteLine($"computer -> {tradutor.Translate("computer")}"); // Deve mostrar "???"
+    }
 }
