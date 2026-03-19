@@ -39,7 +39,7 @@
     }
 }
 
-*/
+
 
 using System;
 using System.Collections.Generic;
@@ -106,5 +106,50 @@ public class Translator
     public bool HasWord(string word)
     {
         return _translations.ContainsKey(word);
+    }
+}
+
+*/
+
+using System;
+using System.Collections.Generic;
+
+public class Translator
+{
+    private Dictionary<string, string> _translations = new Dictionary<string, string>();
+    
+    public void AddWord(string word, string translation)
+    {
+        if (_translations.ContainsKey(word))
+        {
+            Console.WriteLine($"Aviso: '{word}' já existe. Atualizando de '{_translations[word]}' para '{translation}'");
+            _translations[word] = translation;
+        }
+        else
+        {
+            _translations.Add(word, translation);
+            Console.WriteLine($"Adicionado: '{word}' -> '{translation}'");
+        }
+    }
+    
+    public string Translate(string word)
+    {
+        // Removido o '?' para evitar o aviso CS8632
+        if (_translations.TryGetValue(word, out string translation))
+        {
+            return translation;
+        }
+        return "???";
+    }
+    
+    public int Count
+    {
+        get { return _translations.Count; }
+    }
+    
+    public void Clear()
+    {
+        _translations.Clear();
+        Console.WriteLine("Todas as traduções foram removidas.");
     }
 }
