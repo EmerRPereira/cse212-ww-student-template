@@ -26,16 +26,14 @@ public static class SetsAndMaps
         
         foreach (var word in words)
         {
-            // Inverte a palavra (ex: "am" vira "ma")
-            string reversed = new string(new char[] { word[1], word[0] });
+            // Cria a string invertida manualmente
+            string reversed = word[1].ToString() + word[0];
             
-            // Se já vimos a palavra invertida, encontramos um par
             if (seen.Contains(reversed))
             {
                 result.Add($"{reversed} & {word}");
             }
             
-            // Adiciona a palavra atual ao conjunto
             seen.Add(word);
         }
         
