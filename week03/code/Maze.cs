@@ -26,56 +26,56 @@ public class Maze
     }
 
     public void MoveLeft()
-{
-    var key = (_currX, _currY);
-    if (_mazeMap.ContainsKey(key) && _mazeMap[key][0]) // índice 0 = left
     {
-        _currX--;
+        var key = new ValueTuple<int, int>(_currX, _currY);
+        if (_mazeMap.ContainsKey(key) && _mazeMap[key][0])
+        {
+            _currX--;
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
-    else
-    {
-        throw new InvalidOperationException("Can't go that way!");
-    }
-}
 
-public void MoveRight()
-{
-    var key = (_currX, _currY);
-    if (_mazeMap.ContainsKey(key) && _mazeMap[key][1]) // índice 1 = right
+    public void MoveRight()
     {
-        _currX++;
+        var key = new ValueTuple<int, int>(_currX, _currY);
+        if (_mazeMap.ContainsKey(key) && _mazeMap[key][1])
+        {
+            _currX++;
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
-    else
-    {
-        throw new InvalidOperationException("Can't go that way!");
-    }
-}
 
-public void MoveUp()
-{
-    var key = (_currX, _currY);
-    if (_mazeMap.ContainsKey(key) && _mazeMap[key][2]) // índice 2 = up
+    public void MoveUp()
     {
-        _currY--;
+        var key = new ValueTuple<int, int>(_currX, _currY);
+        if (_mazeMap.ContainsKey(key) && _mazeMap[key][2])
+        {
+            _currY--;
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
-    else
-    {
-        throw new InvalidOperationException("Can't go that way!");
-    }
-}
 
-public void MoveDown()
-{
-    var key = (_currX, _currY);
-    if (_mazeMap.ContainsKey(key) && _mazeMap[key][3]) // índice 3 = down
+    public void MoveDown()
     {
-        _currY++;
+        var key = new ValueTuple<int, int>(_currX, _currY);
+        if (_mazeMap.ContainsKey(key) && _mazeMap[key][3])
+        {
+            _currY++;
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
-    else
-    {
-        throw new InvalidOperationException("Can't go that way!");
-    }
-}
 
     public string GetStatus()
     {
