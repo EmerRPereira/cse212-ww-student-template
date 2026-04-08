@@ -30,6 +30,23 @@ public class Node
         // value == Data: do nothing (no duplicates)
     }
 
+    public string Reverse()
+    {
+        var numbers = new List<int>();
+        TraverseReverse(_root, numbers);
+        return $"<IEnumerable>{{{string.Join(", ", numbers)}}}";
+    }
+
+    private void TraverseReverse(Node? node, List<int> values)
+    {
+        if (node is not null)
+        {
+            TraverseReverse(node.Right, values);
+            values.Add(node.Data);
+            TraverseReverse(node.Left, values);
+        }
+    }
+
     public bool Contains(int value)
     {
         if (value == Data)
